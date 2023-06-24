@@ -1,3 +1,5 @@
 tests/
 raw-data/
 data/
+__pycache__/
+alembic/versions/__pycache__/
