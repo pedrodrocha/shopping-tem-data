@@ -16,6 +16,14 @@ pymysql = "^1.0.3"
 python-dotenv = "^1.0.0"
 ruff = "^0.0.275"
 
+[tool.ruff]
+# Enumerate all fixed violations.
+show-fixes = true
+
+# Rules
+select = ["E", "W", "F", "Q", "B", "C90", "I", "N", "UP", "ANN", "COM", "PYI", "RET", "SIM", "PL"]
+
+ignore = [ "ANN101" ]
 
 [build-system]
 requires = ["poetry-core"]
