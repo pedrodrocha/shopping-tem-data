@@ -1,4 +1,4 @@
-"""Create shoppings table.
+"""Create shoppings table
 
 Revision ID: a18d7122bdc2
 Revises:
