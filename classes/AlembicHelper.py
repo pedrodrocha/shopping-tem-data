@@ -3,7 +3,7 @@ from sqlalchemy.engine.base import Connection
 from sqlalchemy.engine.reflection import Inspector
 
 class AlembicHelper:
-    """A helper class for alembic migrations"""
+    """A helper class for Alembic migrations"""
     def __init__(self, conn: Connection):
         self.conn = conn 
         pass

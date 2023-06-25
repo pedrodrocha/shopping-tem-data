@@ -22,11 +22,20 @@ def upgrade() -> None:
     if table_exists is False:
         op.create_table(
             'shoppings',
-             sa.Column('id', sa.Integer, primary_key=True, autoincrement= True),
+             sa.Column(
+                'id', sa.Integer, 
+                primary_key=True, autoincrement= True
+            ),
              sa.Column('name', sa.String(255)),
              sa.Column('site_url', sa.String(255)),
-             sa.Column('updated_at', sa.TIMESTAMP, server_default=sa.text('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')),
-             sa.Column('created_at', sa.TIMESTAMP, server_default=sa.text('CURRENT_TIMESTAMP'))
+             sa.Column(
+                'updated_at', sa.TIMESTAMP, 
+                server_default=sa.text('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
+            ),
+             sa.Column(
+                'created_at', sa.TIMESTAMP, 
+                server_default=sa.text('CURRENT_TIMESTAMP')
+            )
         )
 
 def downgrade() -> None:
