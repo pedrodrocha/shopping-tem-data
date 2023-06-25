@@ -6,6 +6,7 @@ Create Date: 2023-06-24 14:43:40.680666
 
 """
 import sqlalchemy as sa
+from sqlalchemy.dialects.mysql import BIGINT
 
 from alembic import op
 from classes.AlembicHelper import AlembicHelper
@@ -24,7 +25,7 @@ def upgrade() -> None: #noqa: D203
         op.create_table(
             "shoppings",
              sa.Column(
-                "id", sa.Integer,
+                "id", BIGINT(unsigned=True),
                 primary_key=True, autoincrement= True,
             ),
              sa.Column("name", sa.String(255)),

@@ -1,5 +1,4 @@
-from classes.AlembicHelper import AlembicHelper
+from models.Base import Base
 
-alembic_helper = AlembicHelper()
+base = Base()
 
-print(alembic_helper.table_exists("la"))
