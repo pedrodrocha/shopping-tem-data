@@ -1,42 +1,43 @@
-"""create shopping_addresses table
+"""create stores table
 
-Revision ID: e72e9042a7ab
-Revises: 9a8b063556cc
-Create Date: 2023-07-04 18:49:58.749460
+Revision ID: f5180366cf9e
+Revises: bedf0a3696e1
+Create Date: 2023-07-04 19:04:13.368723
 
 """
 import sqlalchemy as sa
-from sqlalchemy.dialects.mysql import BIGINT, INTEGER
+from sqlalchemy.dialects.mysql import BIGINT
 
 from alembic import op
 from classes.AlembicHelper import AlembicHelper
 
 # revision identifiers, used by Alembic.
-revision = "e72e9042a7ab"
-down_revision = "9a8b063556cc"
+revision = "f5180366cf9e"
+down_revision = "bedf0a3696e1"
 branch_labels = None
 depends_on = None
 
 
 def upgrade() -> None:
     helper = AlembicHelper(conn=op.get_bind())
-    table_exists = helper.table_exists("shopping_addresses")
+    table_exists = helper.table_exists("stores")
+
     if table_exists is False:
         op.create_table(
-            "shopping_addresses",
+            "stores",
             sa.Column(
                 "id", BIGINT(unsigned=True),
-                primary_key=True, autoincrement=True,
+                primary_key=True, autoincrement= True,
             ),
             sa.Column(
                 "shopping_id", BIGINT(unsigned=True),
                 sa.ForeignKey("shoppings.id", ondelete="CASCADE"), nullable=False,
             ),
-            sa.Column("address_line_1", sa.String(255)),
-            sa.Column("address_line_2", sa.String(255), nullable=True),
-            sa.Column("state", sa.String(255)),
-            sa.Column("city", sa.String(255)),
-            sa.Column("postal_code", INTEGER(unsigned=True)),
+            sa.Column(
+                "brand_id", BIGINT(unsigned=True),
+                sa.ForeignKey("brands.id", ondelete="CASCADE"), nullable=False,
+            ),
+            sa.Column("location", sa.String(255), nullable=True),
             sa.Column(
                 "updated_at", sa.TIMESTAMP,
                 server_default=sa.text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"),
@@ -47,14 +48,19 @@ def upgrade() -> None:
             ),
         )
 
-
 def downgrade() -> None:
     helper = AlembicHelper(conn=op.get_bind())
-    table_exists = helper.table_exists("shopping_addresses")
+    table_exists = helper.table_exists("stores")
+
     if table_exists is True:
         op.drop_constraint(
-            "fk_shopping_addresses_shopping_id_shoppings",
-            table_name="shopping_addresses",
+            "fk_stores_shopping_id_shoppings",
+            table_name="stores",
             type_="foreignkey",
         )
-        op.drop_table("shopping_addresses")
+        op.drop_constraint(
+            "fk_stores_brand_id_brands",
+            table_name="stores",
+            type_="foreignkey",
+        )
+        op.drop_table("stores")
