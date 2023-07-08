@@ -1,5 +1,8 @@
+from datetime import time
+
 from models.Shopping import Shopping
 from models.ShoppingAddress import ShoppingAddress  # ruff: noqa: F401
+from models.ShoppingOpeningHour import ShoppingOpeningHour, WeekDays  # ruff: noqa: F401
 from models.ShoppingPhone import ShoppingPhone  # ruff: noqa: F401
 from shopping_data import Session
 
@@ -24,6 +27,12 @@ with Session() as session:
 
     shopping.shopping_address = address
 
+    opening = ShoppingOpeningHour(
+        week_day=WeekDays.sunday,
+        opening_hour=time(4,50,10),
+        closing_hour=time(10,50,10),
+    )
+    shopping.shopping_opening_hours.append(opening)
 
     session.add(shopping)
 
