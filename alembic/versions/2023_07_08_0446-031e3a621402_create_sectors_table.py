@@ -29,7 +29,7 @@ def upgrade() -> None:
                 "id", BIGINT(unsigned=True),
                 primary_key=True, autoincrement= True,
             ),
-            sa.Column("sector", sa.String(255)),
+            sa.Column("sector", sa.String(255), unique=True),
             sa.Column("description", sa.String(255), nullable=True),
             sa.Column(
                 "updated_at", sa.TIMESTAMP,

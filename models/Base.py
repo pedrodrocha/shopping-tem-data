@@ -1,10 +1,10 @@
 from datetime import datetime
 
 from sqlalchemy import MetaData
-from sqlalchemy.orm import DeclarativeBase, Mapped, MappedAsDataclass, mapped_column
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 
-class Base(MappedAsDataclass, DeclarativeBase):
+class Base(DeclarativeBase):
     """base sqalalchemy model"""
     metadata = MetaData(naming_convention={
         "ix": "ix_%(column_0_label)s",
@@ -18,5 +18,5 @@ class Base(MappedAsDataclass, DeclarativeBase):
 
 class TimestampMixin:
     """define timestamp columns for models"""
-    updated_at: Mapped[datetime | None]
-    created_at: Mapped[datetime | None]
+    updated_at: Mapped[datetime | None] = mapped_column(default=datetime.now, onupdate=datetime.now)
+    created_at: Mapped[datetime | None] = mapped_column(default=datetime.now)

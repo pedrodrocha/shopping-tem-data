@@ -28,7 +28,7 @@ def upgrade() -> None:
                 "id", BIGINT(unsigned=True),
                 primary_key=True, autoincrement= True,
             ),
-            sa.Column("name", sa.String(255)),
+            sa.Column("name", sa.String(255), unique=True),
             sa.Column("description", sa.String(255)),
             sa.Column("site_url", sa.String(255)),
             sa.Column(

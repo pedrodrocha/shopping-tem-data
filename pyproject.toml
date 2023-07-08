@@ -15,6 +15,7 @@ alembic = "^1.11.1"
 pymysql = "^1.0.3"
 python-dotenv = "^1.0.0"
 ruff = "^0.0.275"
+python-decouple = "^3.8"
 
 [build-system]
 requires = ["poetry-core"]

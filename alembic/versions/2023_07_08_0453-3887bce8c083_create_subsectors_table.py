@@ -33,7 +33,7 @@ def upgrade() -> None:
                 "sector_id", BIGINT(unsigned=True),
                 sa.ForeignKey("sectors.id", ondelete="CASCADE"), nullable=False,
             ),
-            sa.Column("subsector", sa.String(255)),
+            sa.Column("subsector", sa.String(255), unique=True),
             sa.Column("description", sa.String(255), nullable=True),
             sa.Column(
                 "updated_at", sa.TIMESTAMP,
