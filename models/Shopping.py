@@ -1,16 +1,17 @@
-from datetime import datetime
 
 from sqlalchemy import String
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from models.Base import Base
+from models.Base import Base, TimestampMixin
+from models.ShoppingPhone import ShoppingPhone
+
+from typing import List
 
 
-class Shopping(Base):
+class Shopping(TimestampMixin, Base):
     __tablename__ = "shoppings"
 
-    id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(255))
     site_url: Mapped[str] = mapped_column(String(255))
-    updated_at: Mapped[datetime | None]
-    created_at: Mapped[datetime | None]
+
+    shopping_phones: Mapped[List["ShoppingPhone"]] = relationship(back_populates="shopping_phones")
