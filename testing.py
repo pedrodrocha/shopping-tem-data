@@ -1,4 +1,5 @@
-from models.Models import Shopping
+from models.Shopping import Shopping
+from models.ShoppingPhone import ShoppingPhone  # ruff: noqa: F401
 from shopping_data import Session
 
 with Session() as session:

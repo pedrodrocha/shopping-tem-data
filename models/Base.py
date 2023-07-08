@@ -18,5 +18,8 @@ class Base(DeclarativeBase):
 
 class TimestampMixin:
     """define timestamp columns for models"""
-    updated_at: Mapped[datetime | None] = mapped_column(default=datetime.now, onupdate=datetime.now)
+    updated_at: Mapped[datetime | None] = mapped_column(
+        default=datetime.now,
+        onupdate=datetime.now,
+    )
     created_at: Mapped[datetime | None] = mapped_column(default=datetime.now)
