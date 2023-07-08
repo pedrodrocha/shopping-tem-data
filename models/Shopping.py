@@ -11,6 +11,7 @@ if TYPE_CHECKING:
     from models.ShoppingAddress import ShoppingAddress
     from models.ShoppingOpeningHour import ShoppingOpeningHour
     from models.ShoppingPhone import ShoppingPhone
+    from models.Store import Store
 
 class Shopping(TimestampMixin, Base):
     __tablename__ = "shoppings"
@@ -32,3 +33,9 @@ class Shopping(TimestampMixin, Base):
         "ShoppingOpeningHour",
         back_populates="shopping",
     )
+
+    stores: Mapped[list[Store]] = relationship(
+        "Store",
+        back_populates="shopping",
+    )
+
