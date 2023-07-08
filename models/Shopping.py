@@ -8,8 +8,8 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from models.Base import Base, TimestampMixin
 
 if TYPE_CHECKING:
-    from models.ShoppingPhone import ShoppingPhone
     from models.ShoppingAddress import ShoppingAddress
+    from models.ShoppingPhone import ShoppingPhone
 
 class Shopping(TimestampMixin, Base):
     __tablename__ = "shoppings"

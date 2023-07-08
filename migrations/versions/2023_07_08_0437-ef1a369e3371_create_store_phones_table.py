@@ -6,9 +6,9 @@ Create Date: 2023-07-08 04:37:41.226782
 
 """
 import sqlalchemy as sa
+from alembic import op
 from sqlalchemy.dialects.mysql import BIGINT
 
-from alembic import op
 from classes.AlembicHelper import AlembicHelper
 
 # revision identifiers, used by Alembic.

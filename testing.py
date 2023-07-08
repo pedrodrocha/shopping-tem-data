@@ -1,6 +1,6 @@
 from models.Shopping import Shopping
-from models.ShoppingPhone import ShoppingPhone  # ruff: noqa: F401
 from models.ShoppingAddress import ShoppingAddress  # ruff: noqa: F401
+from models.ShoppingPhone import ShoppingPhone  # ruff: noqa: F401
 from shopping_data import Session
 
 with Session() as session:
@@ -19,7 +19,7 @@ with Session() as session:
         address_line_2=None,
         state="SP",
         city="SP",
-        postal_code=1230
+        postal_code=1230,
     )
 
     shopping.shopping_address = address
