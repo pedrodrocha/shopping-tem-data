@@ -10,6 +10,7 @@ from models.Base import Base, TimestampMixin
 if TYPE_CHECKING:
     from models.Shopping import Shopping
     from models.Brand import Brand
+    from models.StorePhone import StorePhone
 
 class Store(TimestampMixin, Base):
     __tablename__="stores"
@@ -27,4 +28,9 @@ class Store(TimestampMixin, Base):
     brand: Mapped[Brand] = relationship(
         'Brand',
         back_populates="stores"
+    )
+
+    store_phones: Mapped[list[StorePhone]] = relationship(
+        'StorePhone',
+        back_populates="store"
     )

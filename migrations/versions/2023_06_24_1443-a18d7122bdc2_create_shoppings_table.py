@@ -28,7 +28,7 @@ def upgrade() -> None: #noqa: D203
                 "id", BIGINT(unsigned=True),
                 primary_key=True, autoincrement= True,
             ),
-             sa.Column("name", sa.String(255), unique=True),
+             sa.Column("name", sa.String(255)),
              sa.Column("site_url", sa.String(255)),
              sa.Column(
                 "updated_at", sa.TIMESTAMP,
