@@ -5,10 +5,10 @@ from typing import TYPE_CHECKING
 from sqlalchemy import ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from models.Base import Base, TimestampMixin
+from models.base import Base, TimestampMixin
 
 if TYPE_CHECKING:
-    from models.Shopping import Shopping
+    from models.shopping import Shopping
 
 
 class ShoppingAddress(TimestampMixin, Base):

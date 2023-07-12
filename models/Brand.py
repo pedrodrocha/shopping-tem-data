@@ -5,12 +5,12 @@ from typing import TYPE_CHECKING
 from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from models.Base import Base, TimestampMixin
+from models.base import Base, TimestampMixin
 
 if TYPE_CHECKING:
-    from models.Sector import Sector
-    from models.Subsector import Subsector
-    from models.Store import Store
+    from models.sector import Sector
+    from models.store import Store
+    from models.subsector import Subsector
 
 class Brand(TimestampMixin, Base):
     __tablename__="brands"
@@ -31,7 +31,7 @@ class Brand(TimestampMixin, Base):
     )
 
     subsectors: Mapped[list[Subsector]] = relationship(
-        'Subsector',
+        "Subsector",
         secondary="subsectors_brands",
-        back_populates="brands"
+        back_populates="brands",
     )
