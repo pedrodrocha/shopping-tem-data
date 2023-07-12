@@ -9,6 +9,7 @@ from models.Base import Base, TimestampMixin
 
 if TYPE_CHECKING:
     from models.Sector import Sector
+    from models.Brand import Brand
 
 class Subsector(TimestampMixin, Base):
     __tablename__ = "subsectors"
@@ -20,4 +21,10 @@ class Subsector(TimestampMixin, Base):
     sector: Mapped[Sector] = relationship(
         "Sector",
         back_populates="subsectors",
+    )
+
+    brands: Mapped[list[Brand]] = relationship(
+        'Brand',
+        secondary="subsectors_brands",
+        back_populates="subsectors"
     )
