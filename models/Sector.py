@@ -8,6 +8,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from models.Base import Base, TimestampMixin
 
 if TYPE_CHECKING:
+    from models.Brand import Brand
     from models.Subsector import Subsector
 
 class Sector(TimestampMixin, Base):
@@ -19,4 +20,10 @@ class Sector(TimestampMixin, Base):
     subsectors: Mapped[list[Subsector]] = relationship(
         "Subsector",
         back_populates="sector",
+    )
+
+    brands: Mapped[list[Brand]] = relationship(
+        "Brand",
+        secondary="sectors_brands",
+        back_populates="sectors",
     )
