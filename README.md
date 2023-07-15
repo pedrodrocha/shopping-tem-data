@@ -45,5 +45,3 @@ alembic upgrade head
 ```
 This command will apply any pending database migrations and ensure that the database structure is up to date.
 
-$ License
-The Shopping Tem Data repository is open-source and is licensed under the MIT License. You can freely use, modify, and distribute the codebase in accordance with the terms of this license.
