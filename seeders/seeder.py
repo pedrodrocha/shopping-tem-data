@@ -27,16 +27,9 @@ class Seeder(ABC):
         with open(json_path, encoding="utf-8") as file:
             return load(file)
 
-    def check_exists(self, model: Base, **kwargs: dict) -> bool:
+    def check_exists(self, model: Base, **kwargs: int | str) -> bool:
         """
         Method for checking if entry exists in database
         """
         query = self.session.query(model).filter_by(**kwargs)
         return self.session.query(query.exists()).scalar()
-
-
-
-
-
-
-

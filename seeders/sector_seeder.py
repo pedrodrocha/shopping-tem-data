@@ -28,4 +28,3 @@ class SectorSeeder(Seeder):
         )
         self.session.add(new_sector)
         self.session.commit()
-

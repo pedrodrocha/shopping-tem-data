@@ -33,7 +33,7 @@ def upgrade() -> None:
                 "sector_id", BIGINT(unsigned=True),
                 sa.ForeignKey("sectors.id", ondelete="CASCADE"), nullable=False,
             ),
-            sa.Column("subsector", sa.String(255), unique=True),
+            sa.Column("subsector", sa.String(255)),
             sa.Column("description", sa.String(255), nullable=True),
             sa.Column(
                 "updated_at", sa.TIMESTAMP,
@@ -43,6 +43,11 @@ def upgrade() -> None:
                 "created_at", sa.TIMESTAMP,
                 server_default=sa.text("CURRENT_TIMESTAMP"),
             ),
+        )
+
+        op.create_unique_constraint(
+            "uq_subsectors_sector_id_subsector",
+            table_name="subsectors", columns=["sector_id", "subsector"],
         )
 
 
@@ -56,4 +61,5 @@ def downgrade() -> None:
             table_name="subsectors",
             type_="foreignkey",
         )
+
         op.drop_table("subsectors")
