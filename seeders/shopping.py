@@ -1,3 +1,4 @@
+from sqlalchemy import select
 
 import models
 from seeders.seeder import Seeder
@@ -21,33 +22,36 @@ class ShoppingSeeder(Seeder):
                 site_url=shopping["site_url"],
             )
             if exists is False:
-                new_shopping = self.add_shopping(shopping)
-                new_shopping = self.add_shopping_address(
-                    new_shopping,
-                    shopping["address"],
-                )
-                new_shopping = self.add_shopping_phones(
-                    new_shopping,
-                    shopping["phones"],
-                )
-                new_shopping = self.add_shopping_opening_hours(
-                    new_shopping,
-                    shopping["opening_hours"],
-                )
+                self.add_shopping(shopping)
 
     def add_shopping(self, shopping: dict) -> models.Shopping:
         """
         Method for adding a new shopping to the database.
         """
-        new_shopping = models.Shopping(
+        shopping_obj = models.Shopping(
             name= shopping["name"],
             site_url=shopping["site_url"],
         )
 
-        self.session.add(new_shopping)
+        shopping_obj = self.add_shopping_address(
+            shopping_obj,
+            shopping["address"],
+        )
+
+        shopping_obj = self.add_shopping_phones(
+                shopping_obj,
+                shopping["phones"],
+        )
+
+        shopping_obj = self.add_shopping_opening_hours(
+            shopping_obj,
+            shopping["opening_hours"],
+        )
+
+        self.session.add(shopping_obj)
         self.session.commit()
 
-        return new_shopping
+        return shopping_obj
 
     def add_shopping_address(
             self,
@@ -60,14 +64,12 @@ class ShoppingSeeder(Seeder):
         new_address = models.ShoppingAddress(
             address_line_1= shopping_address["address_line_1"],
             address_line_2= shopping_address["address_line_2"],
-            state= shopping_address["state"],
-            city= shopping_address["city"],
+            state= self.get_state(shopping_address["state_code"]),
+            city= self.get_city(shopping_address["city_code"]),
             postal_code= shopping_address["postal_code"],
-            shopping= shopping,
         )
 
-        self.session.add(new_address)
-        self.session.commit()
+        shopping.shopping_address = new_address
 
         return shopping
 
@@ -80,19 +82,10 @@ class ShoppingSeeder(Seeder):
         Method for adding new shopping phones belonging to a shopping.
         """
         for phone in shopping_phones:
-            exists = self.check_exists(
-                models.ShoppingPhone,
-                shopping_id=shopping.id,
+            new_phone = models.ShoppingPhone(
                 phone=phone,
             )
-
-            if exists is False:
-                new_phone = models.ShoppingPhone(
-                    phone=phone,
-                    shopping=shopping,
-                )
-                self.session.add(new_phone)
-                self.session.commit()
+            shopping.shopping_phones.append(new_phone)
 
         return shopping
 
@@ -105,19 +98,28 @@ class ShoppingSeeder(Seeder):
         Method for adding new opening hours belonging to a shopping.
         """
         for weekday, hours in shopping_opening_hours.items():
-            exists = self.check_exists(
-                models.ShoppingOpeningHour,
-                shopping_id=shopping.id,
+            new_hour = models.ShoppingOpeningHour(
                 week_day=weekday,
+                opening_hour= hours["opening_hour"],
+                closing_hour= hours["closing_hour"],
+                shopping=shopping,
             )
-            if exists is False:
-                new_hour = models.ShoppingOpeningHour(
-                    week_day=weekday,
-                    opening_hour= hours["opening_hour"],
-                    closing_hour= hours["closing_hour"],
-                    shopping=shopping,
-                )
-                self.session.add(new_hour)
-                self.session.commit()
+            shopping.shopping_opening_hours.append(new_hour)
 
         return shopping
+
+    def get_state(self, state_code: int) -> models.State:
+        """
+        Method for getting the state a shopping_address belongs to.
+        """
+        return self.session.execute(
+            select(models.State).where(models.State.code == state_code),
+        ).scalars().first()
+
+    def get_city(self, city_code: int) -> models.City:
+        """
+        Method for getting the city a shopping_address belongs to.
+        """
+        return self.session.execute(
+            select(models.City).where(models.City.code == city_code),
+        ).scalars().first()
