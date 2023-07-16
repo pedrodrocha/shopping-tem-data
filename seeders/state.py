@@ -15,7 +15,7 @@ class StateSeeder(Seeder):
 
     def run(self) -> None:
         for state in self.data:
-            exists = self.check_exists(models.State, code=state['code'])
+            exists = self.check_exists(models.State, code=state["code"])
 
             if exists is False:
                 self.add_state(state)
@@ -25,9 +25,9 @@ class StateSeeder(Seeder):
         Method for adding a new state to the database.
         """
         new_state = models.State(
-            code=state['code'],
-            abbr=state['abbr'],
-            state=state['state']
+            code=state["code"],
+            abbr=state["abbr"],
+            state=state["state"],
         )
         self.session.add(new_state)
         self.session.commit()
