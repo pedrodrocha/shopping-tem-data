@@ -11,10 +11,9 @@ from sqlalchemy.dialects.mysql import BIGINT
 
 from classes.AlembicHelper import AlembicHelper
 
-
 # revision identifiers, used by Alembic.
-revision = 'e661f1b28b09'
-down_revision = 'cde668d041d2'
+revision = "e661f1b28b09"
+down_revision = "cde668d041d2"
 branch_labels = None
 depends_on = None
 
@@ -23,16 +22,16 @@ def upgrade() -> None:
     table_exists = helper.table_exists("cities")
     if table_exists is False:
         op.create_table(
-            'cities',
+            "cities",
             sa.Column(
                 "id", BIGINT(unsigned=True),
                 primary_key=True, autoincrement=True,
             ),
             sa.Column(
                 "state_id", BIGINT(unsigned=True),
-                sa.ForeignKey("states.id", ondelete="CASCADE"), nullable=False
+                sa.ForeignKey("states.id", ondelete="CASCADE"), nullable=False,
             ),
-            sa.Column("city", sa.String(255), nullable=True),
+            sa.Column("city", sa.String(255), nullable=False),
             sa.Column(
                 "updated_at", sa.TIMESTAMP,
                 server_default=sa.text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"),
