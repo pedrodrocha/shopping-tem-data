@@ -28,6 +28,7 @@ class ShoppingAddress(TimestampMixin, Base):
         "Shopping",
         back_populates="shopping_address",
     )
+    
     state: Mapped[State] = relationship(
         "State",
         back_populates="shopping_address",
