@@ -14,7 +14,8 @@ if TYPE_CHECKING:
 class City(TimestampMixin, Base):
     __tablename__ = "cities"
 
-    city_id: Mapped[int] = mapped_column(ForeignKey("cities.id"))
+    state_id: Mapped[int] = mapped_column(ForeignKey("states.id"))
+    code: Mapped[int]
     city: Mapped[str] = mapped_column(String(255), nullable=False)
 
     state: Mapped[State] = relationship(

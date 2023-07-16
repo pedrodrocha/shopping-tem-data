@@ -14,6 +14,7 @@ if TYPE_CHECKING:
 class State(TimestampMixin, Base):
     __tablename__ = "states"
 
+    code: Mapped[int]
     abbr: Mapped[str] = mapped_column(String(255), nullable=False)
     state: Mapped[str] = mapped_column(String(255), nullable=False)
 

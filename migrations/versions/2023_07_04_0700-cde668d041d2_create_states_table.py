@@ -28,6 +28,9 @@ def upgrade() -> None:
                 "id", BIGINT(unsigned=True),
                 primary_key=True, autoincrement=True,
             ),
+            sa.Column(
+                "code", BIGINT(unsigned=True), nullable=False,
+            ),
             sa.Column("abbr", sa.String(255), nullable=False),
             sa.Column("state", sa.String(255), nullable=False),
             sa.Column(

@@ -31,6 +31,9 @@ def upgrade() -> None:
                 "state_id", BIGINT(unsigned=True),
                 sa.ForeignKey("states.id", ondelete="CASCADE"), nullable=False,
             ),
+            sa.Column(
+                "code", BIGINT(unsigned=True), nullable=False,
+            ),
             sa.Column("city", sa.String(255), nullable=False),
             sa.Column(
                 "updated_at", sa.TIMESTAMP,
