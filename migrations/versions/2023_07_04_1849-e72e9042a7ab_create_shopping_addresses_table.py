@@ -13,7 +13,7 @@ from classes.AlembicHelper import AlembicHelper
 
 # revision identifiers, used by Alembic.
 revision = "e72e9042a7ab"
-down_revision = "9a8b063556cc"
+down_revision = "e661f1b28b09"
 branch_labels = None
 depends_on = None
 
@@ -34,8 +34,14 @@ def upgrade() -> None:
             ),
             sa.Column("address_line_1", sa.String(255)),
             sa.Column("address_line_2", sa.String(255), nullable=True),
-            sa.Column("state", sa.String(255)),
-            sa.Column("city", sa.String(255)),
+            sa.Column(
+                "state_id", BIGINT(unsigned=True),
+                sa.ForeignKey("states.id", ondelete="CASCADE"), nullable=False,
+            ),
+            sa.Column(
+                "city_id", BIGINT(unsigned=True),
+                sa.ForeignKey("cities.id", ondelete="CASCADE"), nullable=False,
+            ),
             sa.Column("postal_code", INTEGER(unsigned=True)),
             sa.Column(
                 "updated_at", sa.TIMESTAMP,
@@ -52,9 +58,4 @@ def downgrade() -> None:
     helper = AlembicHelper(conn=op.get_bind())
     table_exists = helper.table_exists("shopping_addresses")
     if table_exists is True:
-        op.drop_constraint(
-            "fk_shopping_addresses_shopping_id_shoppings",
-            table_name="shopping_addresses",
-            type_="foreignkey",
-        )
         op.drop_table("shopping_addresses")
